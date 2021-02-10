@@ -6,7 +6,7 @@ import {
 } from 'lodash'
 import uuid from 'uuid/dist/v4'
 
-import { QUEUE_ACTION, REMOVE_ACTION } from "./actions"
+import { QUEUE_ACTION, REMOVE_ACTION } from './actions'
 
 /**
  * Wraps reduxsauce's creator function to append offline metadata.
@@ -89,7 +89,7 @@ export const queueAction = (action) => {
         uuid: uuid(),
         ...action.meta,
       },
-    }
+    },
   }
 }
 
@@ -98,6 +98,6 @@ export const removeAction = (action) => {
     type: REMOVE_ACTION,
     payload: {
       uuid: action.uuid,
-    }
+    },
   }
 }

@@ -28,7 +28,8 @@ import getConfig from './config'
  * @param {Function} dispatch Redux's dispatch function.
  */
 function fireQueuedActions(queue, dispatch) {
-  queue.forEach((actionInQueue) => {
+  queue.forEach(async (actionInQueue) => {
+    await new Promise((resolve) => setTimeout(resolve, 10000))
     dispatch({
       ...actionInQueue,
       consume: true,
