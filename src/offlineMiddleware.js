@@ -1,3 +1,5 @@
+/* eslint-disable no-await-in-loop */
+/* eslint-disable no-new */
 import {
   includes as _includes,
   get as _get,
@@ -27,9 +29,19 @@ import getConfig from './config'
  * @param {Array} queue An array of queued Redux actions.
  * @param {Function} dispatch Redux's dispatch function.
  */
-function fireQueuedActions(queue, dispatch) {
-  queue.forEach(async (actionInQueue) => {
+async function fireQueuedActions(queue, dispatch) {
+  for (let i = 0; i < queue.length; i++) {
     await new Promise((resolve) => setTimeout(resolve, 10000))
+    dispatch({
+      ...queue[i],
+      consume: true,
+      meta: {
+        ...queue[i].meta,
+        queueIfOffline: false,
+      },
+    })
+  }
+  /* queue.forEach(async (actionInQueue) => {
     dispatch({
       ...actionInQueue,
       consume: true,
@@ -38,7 +50,7 @@ function fireQueuedActions(queue, dispatch) {
         queueIfOffline: false,
       },
     })
-  })
+  }) */
 }
 
 /**

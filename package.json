@@ -1,6 +1,6 @@
 {
   "name": "pdv-react-native-offline-queue",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Simple offline queue for redux, inspired by redux-queue-offline.",
   "main": "lib/index.js",
   "types": "./typings.d.ts",
