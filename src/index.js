@@ -1,6 +1,8 @@
 import * as actions from './actions'
 import offlineMiddleware from './offlineMiddleware'
-import { createOfflineActions, markActionsOffline, queueAction, removeAction } from './offlineActions'
+import {
+  createOfflineActions, markActionsOffline, queueAction, removeAction,
+} from './offlineActions'
 import reducer from './reducer'
 import suspendSaga from './suspendSaga'
 import consumeActionMiddleware from './consumeActionMiddleware'

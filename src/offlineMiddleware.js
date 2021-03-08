@@ -30,21 +30,20 @@ import getConfig from './config'
  * @param {Function} dispatch Redux's dispatch function.
  */
 async function fireQueuedActions(queue, dispatch) {
+  const queueToEdit = queue.slice(0)
 
-    const queueToEdit = queue.slice(0);
-    
-    const queueSorted = queueToEdit.sort((a, b) => {
-        if (
-          a.type === 'SYNC_OPEN_CASHIER_REQUEST' &&
-          b.type !== 'SYNC_OPEN_CASHIER_REQUEST'
-        ) {
-          return -1;
-        }
-        if (a.type === 'SYNC_CLOSE_CASHIER' && b.type !== 'SYNC_CLOSE_CASHIER') {
-          return 1;
-        }
-        return 0;
-    })
+  const queueSorted = queueToEdit.sort((a, b) => {
+    if (
+      a.type === 'SYNC_OPEN_CASHIER_REQUEST'
+          && b.type !== 'SYNC_OPEN_CASHIER_REQUEST'
+    ) {
+      return -1
+    }
+    if (a.type === 'SYNC_CLOSE_CASHIER' && b.type !== 'SYNC_CLOSE_CASHIER') {
+      return 1
+    }
+    return 0
+  })
 
   for (let i = 0; i < queueSorted.length; i++) {
     await new Promise((resolve) => setTimeout(resolve, 10000))
