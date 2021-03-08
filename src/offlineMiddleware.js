@@ -34,38 +34,33 @@ async function fireQueuedActions(queue, dispatch) {
 
   const queueSorted = queueToEdit.sort((a, b) => {
     if (
-      a.type === 'SYNC_OPEN_CASHIER_REQUEST'
-          && b.type !== 'SYNC_OPEN_CASHIER_REQUEST'
+      (a.type === 'SYNC_OPEN_CASHIER_REQUEST' && b.type !== 'SYNC_OPEN_CASHIER_REQUEST')
+          || (a.type === '@offlineSync/SYNC_CASHLESS_CASHIER_REQUEST' && b.type !== '@offlineSync/SYNC_CASHLESS_CASHIER_REQUEST')
     ) {
       return -1
     }
-    if (a.type === 'SYNC_CLOSE_CASHIER' && b.type !== 'SYNC_CLOSE_CASHIER') {
+
+    if (
+      (a.type === 'SYNC_CLOSE_CASHIER' && b.type !== 'SYNC_CLOSE_CASHIER')
+          || (a.type === '@offlineSync/SYNC_CLOSE_CASHLESS_CASHIER_REQUEST' && b.type !== '@offlineSync/SYNC_CLOSE_CASHLESS_CASHIER_REQUEST')
+    ) {
       return 1
     }
+
     return 0
   })
 
   for (let i = 0; i < queueSorted.length; i++) {
     await new Promise((resolve) => setTimeout(resolve, 10000))
     dispatch({
-      ...queue[i],
+      ...queueSorted[i],
       consume: true,
       meta: {
-        ...queue[i].meta,
+        ...queueSorted[i].meta,
         queueIfOffline: false,
       },
     })
   }
-  /* queue.forEach(async (actionInQueue) => {
-    dispatch({
-      ...actionInQueue,
-      consume: true,
-      meta: {
-        ...actionInQueue.meta,
-        queueIfOffline: false,
-      },
-    })
-  }) */
 }
 
 /**
