@@ -6,5 +6,5 @@
  */
 export default {
   queue: [],
-  isConnected: true,
+  isConnected: false,
 }
